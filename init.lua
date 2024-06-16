@@ -5,7 +5,7 @@
 --  Updated in 2024 by Olivia May.
 --  Some words from NoNameDude
 --  This mod is Free and Open Source Software, released under the LGPL 2.1 or later.
--- 
+--
 -- See README.txt for more information.
 
 chat_anticurse = {}
@@ -24,7 +24,7 @@ local curse_words = {
 	" bitch ",
 	" bitche ",
 	" esex ",
-	" cunt ", 
+	" cunt ",
 	" fuck ",
 	"arsehole",
 	" cum ",
@@ -59,7 +59,7 @@ local curse_words = {
 	"degenerate",
 	"bastard",
 	" porn ",
-	
+
 	-- Russian
 	" еба ",
 	" бля ",
@@ -146,11 +146,6 @@ local curse_words = {
 -- Returns true if a curse word is found
 function chat_anticurse.is_curse_found(name, message)
 
-	-- Is nil when minetest loads i guess?
-	if not message then
-		return false
-	end
-
 	local checkingmessage=string.lower( name.." "..message .." " )
 	local is_curse_found = false
 
@@ -158,7 +153,7 @@ function chat_anticurse.is_curse_found(name, message)
 		if string.find(
 			checkingmessage, curse_words[i],
 			1, true) ~= nil then
-			
+
 			is_curse_found = true
 			break
 		end
@@ -173,8 +168,7 @@ function chat_anticurse.is_curse_found(name, message)
 	return is_curse_found
 end
 
-minetest.register_on_chat_message(
-function(name, message) 
+minetest.register_on_chat_message(function(name, message)
 	return chat_anticurse.is_curse_found(name, message)
 end)
 
@@ -184,24 +178,24 @@ if minetest.chatcommands["me"] then
 
 	minetest.chatcommands["me"].func = function(name, param)
 
-	if chat_anticurse.is_curse_found(name, param) then
-		return nil
-	end
+		if chat_anticurse.is_curse_found(name, param) then
+			return nil
+		end
 
-	return old_command(name, param)
+		return old_command(name, param)
 	end
 end
 
 if minetest.chatcommands["msg"] then
-	
-	local old_command = minetest.chatcommands["msg"].func
-	
-	minetest.chatcommands["msg"].func = function(name, param)
-	
-	if chat_anticurse.is_curse_found(name, param) then
-		return nil
-	end
 
-	return old_command(name, param)
+	local old_command = minetest.chatcommands["msg"].func
+
+	minetest.chatcommands["msg"].func = function(name, param)
+
+		if chat_anticurse.is_curse_found(name, param) then
+			return nil
+		end
+
+		return old_command(name, param)
 	end
 end
