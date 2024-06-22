@@ -206,8 +206,6 @@ for i = 1, #curse_words do
 			break
 		end
 	end
-
-	print(crse_words[i])
 end
 
 -- Add asterisk'd words to list
