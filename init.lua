@@ -166,6 +166,56 @@ local curse_words = {
 	" sch" .. v4 .. "" .. v1 .. "ss" .. v4 .. " ",
 }
 
+local i
+local crs_wrds = {}
+
+-- All vowels asterisk'd
+for i = 1, #curse_words do
+
+	crs_wrds[i] = curse_words[i]
+	crs_wrds[i] = crs_wrds[i]:gsub(v1, "*")
+	crs_wrds[i] = crs_wrds[i]:gsub(v2, "*")
+	crs_wrds[i] = crs_wrds[i]:gsub(v3, "*")
+	crs_wrds[i] = crs_wrds[i]:gsub(v4, "*")
+	crs_wrds[i] = crs_wrds[i]:gsub(v5, "*")
+
+end
+
+local crse_words = {}
+local j
+
+local switch = {
+	[v1] = true,
+	[v2] = true,
+	[v3] = true,
+	[v4] = true,
+	[v5] = true,
+}
+
+-- First vowel asterisk'd
+for i = 1, #curse_words do
+
+	crse_words[i] = curse_words[i]
+	for j = 1, #crse_words[i] do
+		if switch[crse_words[i]:sub(j, j)] then
+			local new_str = ""
+			new_str = crse_words[i]:sub(1, j - 1)
+			new_str = new_str .. "*"
+			new_str = new_str .. crse_words[i]:sub(j + 1)
+			crse_words[i] = new_str
+			break
+		end
+	end
+
+	print(crse_words[i])
+end
+
+-- Add asterisk'd words to list
+for i = 1, #curse_words do
+	curse_words[#curse_words + 1] = crs_wrds[i]
+	curse_words[#curse_words + 1] = crse_words[i]
+end
+
 -- Returns true if a curse word is found
 function chat_anticurse.is_curse_found(name, message)
 
