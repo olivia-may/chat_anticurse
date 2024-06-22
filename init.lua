@@ -162,13 +162,14 @@ local curse_words = {
 -- Returns true if a curse word is found
 function chat_anticurse.is_curse_found(name, message)
 
-	local checkingmessage=string.lower( name.." "..message .." " )
 	local is_curse_found = false
+	local i
 
-	for i=1, #curse_words do
-		if string.find(
-			checkingmessage, curse_words[i],
-			1, true) ~= nil then
+	message = string.lower(name.." "..message .." ")
+
+	for i = 1, #curse_words do
+		if string.find(message, curse_words[i],
+					   1, true) ~= nil then
 
 			is_curse_found = true
 			break
